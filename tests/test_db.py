@@ -18,7 +18,7 @@ def test_insert_relation():
         'co_occurrence', 1
     ]
     tt.insert_relation(relation)
-    assert 'this is a concept' in tt.fetch('this is a concept')[0]
+    assert 'this is a concept' in tt.get_concept_relations('this is a concept')[0]
 
 
 if __name__ == '__main__':
