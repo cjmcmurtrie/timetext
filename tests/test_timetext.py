@@ -12,14 +12,14 @@ def test_timetext_populate():
     tt.parse_and_populate(timestamped_texts)
 
 
-def test_timetext_populate_1000():
-    with open('data/1000.csv', 'r') as f:
+def test_timetext_populate_1000(test_file='data/1000.csv'):
+    with open(test_file, 'r') as f:
         reader = csv.reader(f)
-        relations = [(timestamp, text) for timestamp, text, metadata in reader][1:]
+        time_texts = [(timestamp, text) for timestamp, text, metadata in reader][1:]
     f.close()
     tt = timetext('test_project')
     start = time.time()
-    tt.parse_and_populate(relations)
+    tt.parse_and_populate(time_texts)
     end = time.time()
     print('test: computed 1000 short documents in', end - start)
     assert end - start <= 0.2

@@ -14,8 +14,16 @@ def text_to_concepts(text):
     return set(concepts)
 
 
-def time_text_to_coccur_rows(time, text):
+def time_text_to_coccur_rows(time, text, tags=None):
+    '''
+    :param time: timestamp string
+    :param text: text document string
+    :param tags: iterable of document tags (e.g. country of article)
+    :return: list of tuples: (time, c1, c2, coocurrence, 1)
+    '''
     concepts = set(text_to_concepts(text))
+    if tags:
+        concepts.update(tags)
     cooccurences = []
     for concept_1, concept_2 in product(concepts, concepts):
         if concept_1 != concept_2:
