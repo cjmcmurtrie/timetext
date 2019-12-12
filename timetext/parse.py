@@ -13,6 +13,11 @@ def text_to_concepts(text):
     return set(concepts)
 
 
+def time_text_to_coccur_rows(text, time):
+    concepts = text_to_concepts(text)
+    return [(time, concept, 'coocurrence', 1) for concept in concepts]
+
+
 def text_to_concepts_batch(texts):
     pass
 
