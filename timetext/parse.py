@@ -1,4 +1,5 @@
 import string
+from itertools import product
 
 
 def tokenize(text, lowercase=False):
@@ -13,9 +14,15 @@ def text_to_concepts(text):
     return set(concepts)
 
 
-def time_text_to_coccur_rows(text, time):
-    concepts = text_to_concepts(text)
-    return [(time, concept, 'coocurrence', 1) for concept in concepts]
+def time_text_to_coccur_rows(time, text):
+    concepts = set(text_to_concepts(text))
+    cooccurences = []
+    for concept_1, concept_2 in product(concepts, concepts):
+        if concept_1 != concept_2:
+            cooccurences.append(
+                (time, concept_1, concept_2, 'coocurrence', 1)
+            )
+    return cooccurences
 
 
 def text_to_concepts_batch(texts):
