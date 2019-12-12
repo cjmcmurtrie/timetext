@@ -1,9 +1,9 @@
-from timetext.tt import Timetext, FETCH_QUERIES
+from timetext.db import DB, FETCH_QUERIES
 
 
 def test_initialize_new_project():
     project_name = 'test_project'
-    Timetext(project_name)
+    DB(project_name)
 
 
 def test_insert_relation():
@@ -11,7 +11,7 @@ def test_insert_relation():
     Insert relation into
     '''
     project_name = 'test_project'
-    tt = Timetext(project_name)
+    tt = DB(project_name)
     relation = [
         '2003-01-01 00:24:52.158000+00:00',
         'this is a concept', 'this is a related concept',
