@@ -5,6 +5,7 @@ Hop across text co-occurrence based concept relations in time.
 Find hops across concepts extracted from text.
 
 ```python
+>>> from timetext import timetext
 >>> tt = timetext('demo')
 >>> times = ['2019-01-01', '2019-01-02']
 >>> texts = ['Elon Musk dives into venture firm (XARG)', 'XARG hires ex Corsicum C.E.O., Robert Half']
