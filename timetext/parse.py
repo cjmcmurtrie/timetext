@@ -1,16 +1,8 @@
 import string
-from itertools import product
 import spacy
 
 
 SPACY = spacy.load("en_core_web_sm", disable=['parser', 'tokenizer', 'ner', 'textcat'])
-
-
-def tokenize(text, lowercase=False):
-    if lowercase:
-        text = text.lower()
-    text = ''.join(c if c not in string.punctuation else ' ' for c in text)
-    return text.split()
 
 
 def text_to_concepts(text):
@@ -69,3 +61,10 @@ def chunkiter(iterable):
         if len(group) == 1:
             result.append(group)
     return result
+
+
+def tokenize(text, lowercase=False):
+    if lowercase:
+        text = text.lower()
+    text = ''.join(c if c not in string.punctuation else ' ' for c in text)
+    return text.split()
