@@ -8,14 +8,14 @@ Find hops across concepts extracted from text.
 >>> from timetext import timetext
 >>> tt = timetext('demo')
 >>> times = ['2019-01-01', '2019-01-02']
->>> texts = ['Elon Musk dives into venture firm (XARG)', 'XARG hires ex Corsicum C.E.O., Robert Half']
+>>> texts = ['Elon Musk dives into venture firm (XARG)', 'XARG hires Corsicum C.E.O., Robert Half']
 >>> tags = [['ENPH'], ['TSLA']]
 >>> tt.parse_and_populate(times=times, tags=tags, texts=texts, mode='spacy')
 >>> hops = tt.hops('Elon Musk', hops=2)
 >>> hops[1]
 {'ENPH', 'dives', 'XARG', 'venture firm'}
 >>> hops[2]
-{'TSLA', 'hires ex', 'Corsicum C.E.O.', 'Robert Half'}
+{'TSLA', 'hires', 'Corsicum C.E.O.', 'Robert Half'}
 ```
 
 Use tags as additional concepts to hop from and to.
