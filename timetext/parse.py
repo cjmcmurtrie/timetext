@@ -58,8 +58,7 @@ def chunkiter(iterable):
                 result.append(group)
                 group = [e]
             prev = e
-        if len(group) == 1:
-            result.append(group)
+        result.append(group)
     return result
 
 

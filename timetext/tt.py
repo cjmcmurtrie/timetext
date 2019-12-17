@@ -31,12 +31,13 @@ class Timetext(object):
         # todo:
         # 1. time window querying
         # 2. optimise with batch querying executemany (currently one query per concept)
-        concepts = {('all_time', concept)}
+        concepts = {concept}
         hop_dict = dict()
         for hop in range(hops):
             novel = set()
             for concept in concepts:
-                novel.update(self.relations(concept[1]))
+                times, related = zip(*self.relations(concept))
+                novel.update(related)
             hop_dict[hop + 1] = novel - concepts
             concepts.update(novel)
         return hop_dict
