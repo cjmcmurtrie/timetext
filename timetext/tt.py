@@ -12,24 +12,29 @@ class Timetext(object):
         for relation in relations:
             self.db.insert_relation(relation)
 
-    def parse_and_populate(self, timed_texts, mode='tokens'):
+    def parse_and_populate(self, times, texts, tags=None, mode='tokens'):
+        if not tags:
+            tags = [[]] * len(times)
+        relations = set()
         if mode == 'tokens':
-            relations = set()
-            for time, text in timed_texts:
+            for time, text, tags in zip(times, texts, tags):
                 relations.update(time_text_to_coccur_rows(time, text))
         elif mode == 'spacy':
-            relations = time_text_to_coccur_batch(timed_texts)
+            relations = time_text_to_coccur_batch(times, texts, tags)
         self.db.insert_relations(relations)
+
+    def relations(self, concept, start_time=None, end_time=None):
+        return self.db.get_concept_relations(concept)
 
     def analyse(self, concept):
         pass
 
 
-def time_text_to_coccur_batch(timed_texts):
-    times, texts = zip(*timed_texts)
+def time_text_to_coccur_batch(times, texts, tags=None):
     concept_sets = text_to_concepts_spacy_batch(texts)
     cooccurences = []
-    for time, concept_set in zip(times, concept_sets):
+    for time, concept_set, tags in zip(times, concept_sets, tags):
+        concept_set.update(set(tags))
         for concept_1, concept_2 in product(concept_set, concept_set):
             if concept_1 != concept_2:
                 cooccurences.append(

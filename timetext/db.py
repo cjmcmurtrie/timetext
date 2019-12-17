@@ -40,7 +40,7 @@ INSERT_QUERIES = {
 
 FETCH_QUERIES = {
     'sql_concept_relations': """
-        SELECT * FROM relation WHERE concept_1=?;
+        SELECT time, concept_2 FROM relation WHERE concept_1=?;
     """
 }
 
