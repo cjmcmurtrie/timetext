@@ -43,7 +43,21 @@ def test_timetext_populate_1000_spacy(test_file='data/1000.csv'):
     assert end - start <= 0.6
 
 
+def test_hops():
+    tt = timetext('test_project')
+    timestamped_texts = [
+        ['2003-01-01', 'this is a text with a number of concepts'],
+        ['2003-01-02', 'this is another  document with a number of different concepts']
+    ]
+    times, texts = zip(*timestamped_texts)
+    tt.parse_and_populate(times, texts)
+    results = tt.hops('text', 2)
+    times, texts = zip(*results[2])
+    assert 'different' in texts
+
+
 if __name__ == '__main__':
     test_timetext_populate()
     test_timetext_populate_1000_tokens()
     test_timetext_populate_1000_spacy()
+    test_hops()
