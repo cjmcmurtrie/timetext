@@ -2,7 +2,7 @@ from timetext.tt import Timetext
 """
     timetext
     ~~~~~~~~
-    Build and query a natural language graph database.
+    Hop across text co-occurrence based text relations in time.
 
     :copyright: (c) 2019-2020 by Conan McMurtrie.
     :license: MIT, see LICENSE for more details.
