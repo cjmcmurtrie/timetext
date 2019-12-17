@@ -18,9 +18,24 @@ def test_insert_relation():
         'co_occurrence', 1
     ]
     tt.insert_relation(relation)
-    assert 'this is a concept' in tt.get_concept_relations('this is a concept')[0]
+    assert 'this is a related concept' in tt.get_concept_relations('this is a concept')[0]
+
+
+def test_query_concept():
+    project_name = 'test_project'
+    tt = DB(project_name)
+    relation = [
+        '2003-01-01 00:24:52.158000+00:00',
+        'this is a concept', 'this is a related concept',
+        'co_occurrence', 1
+    ]
+    tt.insert_relation(relation)
+    related_concepts = tt.get_concept_relations('this is a concept')
+    times, concepts = zip(*related_concepts)
+    assert 'this is a related concept' in concepts
 
 
 if __name__ == '__main__':
     test_initialize_new_project()
     test_insert_relation()
+    test_query_concept()
