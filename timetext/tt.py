@@ -72,8 +72,3 @@ def time_text_to_coccur_rows(time, text, tags=None):
                 (time, concept_1, concept_2, 'coocurrence', 1)
             )
     return cooccurences
-
-
-if __name__ == '__main__':
-    tt = Timetext('test_project')
-    print(tt.hops('IBM', 2))
