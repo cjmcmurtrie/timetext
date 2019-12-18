@@ -2,6 +2,11 @@ Timetext
 --------
 Hop across text co-occurrence based concept relations in time.
 
+To run tests from command line:
+```bash
+user$ ./tests/run.sh
+```
+
 Find hops across concepts extracted from text.
 
 ```python
