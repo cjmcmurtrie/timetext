@@ -15,7 +15,7 @@ Find hops across concepts extracted from text.
 >>> times = ['2019-01-01', '2019-01-02']
 >>> texts = ['Elon Musk dives into venture firm (XARG)', 'XARG hires Corsicum C.E.O., Robert Half']
 >>> tags = [['ENPH'], ['TSLA']]
->>> tt.parse_and_populate(times=times, tags=tags, texts=texts, mode='spacy')
+>>> tt.populate(times=times, tags=tags, texts=texts, mode='spacy')
 >>> hops = tt.hops('Elon Musk', hops=2)
 >>> hops[1]
 {'ENPH', 'dives', 'XARG', 'venture firm'}
