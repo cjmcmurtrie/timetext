@@ -41,6 +41,9 @@ INSERT_QUERIES = {
 FETCH_QUERIES = {
     'sql_concept_relations': """
         SELECT time, concept_2 FROM relation WHERE concept_1=?;
+    """,
+    'sql_concept_relations_batch': """
+        SELECT time, concept_2 FROM relation  WHERE concept_1 in ({wildcard})
     """
 }
 
@@ -66,6 +69,17 @@ class DB(object):
         cursor = conn.cursor()
         query = FETCH_QUERIES['sql_concept_relations']
         rows = cursor.execute(query, (concept, )).fetchall()
+        conn.close()
+        return rows
+
+    def get_concept_relations_batch(self, concepts, time_window=None):
+        conn = sql.connect(self.db_path, timeout=10)
+        cursor = conn.cursor()
+        wildcard = ','.join(['?'] * len(concepts))
+        query = FETCH_QUERIES['sql_concept_relations_batch'].format(
+            wildcard=wildcard
+        )
+        rows = cursor.execute(query, concepts).fetchall()
         conn.close()
         return rows
 
