@@ -13,7 +13,7 @@ def test_timetext_populate():
     tt.parse_and_populate(times, texts)
 
 
-def get_1000_test_documents(test_file='data/1000.csv'):
+def get_1000_test_documents(test_file='tests/data/1000.csv'):
     with open(test_file, 'r') as f:
         reader = csv.reader(f)
         time_texts = [(timestamp, text) for timestamp, text, metadata in reader][1:]
@@ -51,13 +51,6 @@ def test_hops():
     ]
     times, texts = zip(*timestamped_texts)
     tt.parse_and_populate(times, texts)
-    results = tt.hops('text', 2)
-    times, texts = zip(*results[2])
-    assert 'different' in texts
-
-
-if __name__ == '__main__':
-    test_timetext_populate()
-    test_timetext_populate_1000_tokens()
-    test_timetext_populate_1000_spacy()
-    test_hops()
+    hops = tt.hops('text', 2)
+    second_hop = hops[2]
+    assert 'different' in second_hop

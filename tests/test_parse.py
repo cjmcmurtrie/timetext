@@ -82,16 +82,3 @@ def test_text_to_concepts_spacy_batch_time():
     text_to_concepts_spacy_batch(texts)
     end = time.time()
     print('extracting concepts took', (end - start) / 1000, 'seconds per document')
-
-
-if __name__ == '__main__':
-    text = '''
-    Limalok is a guyot, an undersea volcanic mountain with a flat top, 
-    in the southeastern Marshall Islands in the Pacific Ocean.
-    '''
-    test_tokenize()
-    test_text_to_concepts()
-    test_text_to_concepts_time()
-    test_text_to_concepts_spacy()
-    test_text_to_concepts_spacy_time()
-    test_text_to_concepts_spacy_batch_time()
