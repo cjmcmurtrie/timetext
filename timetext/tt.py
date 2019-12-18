@@ -1,5 +1,5 @@
 from itertools import product
-from collections import defaultdict
+from collections.abc import Iterable
 from timetext.db import DB
 from timetext.parse import text_to_concepts, text_to_concepts_spacy_batch
 
@@ -9,11 +9,7 @@ class Timetext(object):
     def __init__(self, project_name):
         self.db = DB(project_name)
 
-    def populate(self, relations):
-        for relation in relations:
-            self.db.insert_relation(relation)
-
-    def parse_and_populate(self, times, texts, tags=None, mode='tokens'):
+    def populate(self, times, texts, tags=None, mode='tokens'):
         if not tags:
             tags = [[]] * len(times)
         relations = set()
@@ -24,23 +20,27 @@ class Timetext(object):
             relations = time_text_to_coccur_batch(times, texts, tags)
         self.db.insert_relations(relations)
 
-    def relations(self, concept, start_time=None, end_time=None):
-        return self.db.get_concept_relations(concept)
+    def relations(self, concepts, start_time=None, end_time=None):
+        if isinstance(concepts, str):
+            return self.db.get_concept_relations(concepts)
+        elif isinstance(concepts, Iterable):
+            return self.db.get_concept_relations_batch(concepts)
 
     def hops(self, concept, hops, start_time=None, end_time=None):
         # todo:
         # 1. time window querying
-        # 2. optimise with batch querying executemany (currently one query per concept)
         concepts = {concept}
         hop_dict = dict()
         for hop in range(hops):
-            novel = set()
-            for concept in concepts:
-                times, related = zip(*self.relations(concept))
-                novel.update(related)
+            times, related = zip(*self.relations(list(concepts)))
+            novel = set(related)
             hop_dict[hop + 1] = novel - concepts
             concepts.update(novel)
         return hop_dict
+
+    def paths(self, concept, hops, start_time=None, end_time=None):
+        # todo: calculate hops as nested dicts to include paths.
+        pass
 
 
 def time_text_to_coccur_batch(times, texts, tags=None):
