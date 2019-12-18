@@ -9,11 +9,7 @@ class Timetext(object):
     def __init__(self, project_name):
         self.db = DB(project_name)
 
-    def populate(self, relations):
-        for relation in relations:
-            self.db.insert_relation(relation)
-
-    def parse_and_populate(self, times, texts, tags=None, mode='tokens'):
+    def populate(self, times, texts, tags=None, mode='tokens'):
         if not tags:
             tags = [[]] * len(times)
         relations = set()
