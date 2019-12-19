@@ -12,15 +12,7 @@ class Timetext(object):
     def populate(self, times, texts, tags=None, mode='tokens'):
         if not tags:
             tags = [[]] * len(times)
-        # relations = set()
         relations = time_text_to_coccur_batch(times, texts, tags, mode=mode)
-        # if mode == 'tokens':
-        #     for time, text, tags in zip(times, texts, tags):
-        #         relations.update(time_text_to_coccur_rows(time, text))
-        # elif mode == 'spacy':
-        #     relations = time_text_to_coccur_batch(times, texts, tags)
-        # elif mode == 'stopwords':
-        #     pass
         self.db.insert_relations(relations)
 
     def relations(self, concepts, start_time=None, end_time=None):
@@ -57,24 +49,3 @@ def time_text_to_coccur_batch(times, texts, tags=None, mode='spacy'):
                     (time, concept_1, concept_2, 'coocurrence', 1)
                 )
     return cooccurences
-
-
-# def time_text_to_coccur_rows(time, text, tags=None):
-#     '''
-#     :param time: timestamp string
-#     :param text: text document string
-#     :param tags: iterable of document tags (e.g. country of article)
-#     :return: list of tuples: (time, c1, c2, coocurrence, 1)
-#     '''
-#     concepts = set(text_to_concepts(text))
-#     if tags:
-#         concepts.update(tags)
-#     cooccurences = []
-#     for concept_1, concept_2 in product(concepts, concepts):
-#         if concept_1 != concept_2:
-#             cooccurences.append(
-#                 (time, concept_1, concept_2, 'coocurrence', 1)
-#             )
-#     return cooccurences
-
-
