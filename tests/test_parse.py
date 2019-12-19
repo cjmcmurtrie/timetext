@@ -1,5 +1,5 @@
 import time
-from timetext.parse import tokenize, text_to_concepts, text_to_concepts_spacy, text_to_concepts_spacy_batch
+from timetext.parse import tokenize, text_to_concepts_tokens, text_to_concepts_spacy, text_to_concepts_spacy_batch
 
 
 def test_tokenize():
@@ -19,7 +19,7 @@ def test_text_to_concepts():
     Limalok is a guyot, an undersea volcanic mountain with a flat top, 
     in the southeastern Marshall Islands in the Pacific Ocean.
     '''
-    concepts = text_to_concepts(text)
+    concepts = text_to_concepts_tokens(text)
     assert concepts == {
         'Limalok', 'is', 'a', 'guyot', 'an', 'undersea', 'volcanic', 'mountain', 'with', 'a', 'flat',
         'top', 'in', 'the', 'southeastern', 'Marshall', 'Islands', 'in', 'the', 'Pacific', 'Ocean'
@@ -38,7 +38,7 @@ def test_text_to_concepts_time():
     times = []
     for _ in range(1000):
         start = time.time()
-        text_to_concepts(text)
+        text_to_concepts_tokens(text)
         times.append(time.time() - start)
     average_run = sum(times) / len(times)
     print('extracting concepts took', average_run, 'seconds per document')
@@ -51,6 +51,7 @@ def test_text_to_concepts_spacy():
     in the southeastern Marshall Islands in the Pacific Ocean.
     '''
     concepts = text_to_concepts_spacy(text)
+    print(concepts)
     assert concepts == {
         'Limalok', 'Marshall Islands', 'undersea', 'volcanic',
         'Pacific Ocean', 'southeastern', 'top', 'flat', 'guyot', 'mountain'
